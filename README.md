@@ -1,7 +1,10 @@
 # Simple Local RAG Tutorial
 
 Local RAG pipeline we're going to build:
-<img width="4064" height="1464" alt="https://github.com/Vishal-Krishna-Kumar/RAG-Pipeline/blob/main/images/simple-local-rag-workflow-flowchart.png" />
+<img width="4064" height="1464" alt="simple-local-rag-workflow-flowchart" src="https://github.com/Vishal-Krishna-Kumar/RAG-Pipeline/blob/main/images/simple-local-rag-workflow-flowchart.png" />
+'''
+
+'''
 
 
 
