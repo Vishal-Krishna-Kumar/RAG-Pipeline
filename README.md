@@ -1,12 +1,16 @@
+> [!IMPORTANT]
+> **About this repository**
+> This is my walkthrough of **Daniel Bourke's [simple-local-rag](https://github.com/mrdbourke/simple-local-rag)** tutorial: a local RAG pipeline over a 1,200-page nutrition textbook, with Gemma running on a local GPU. The notebook `RetrievalAugumentationGenerative.ipynb` is his `00-simple-local-rag.ipynb`: 88 of its 126 cells are unchanged, and the rest are small edits I made while following along. The README below is his, with his video and Colab links restored.
+>
+> The original repository has no open-source license, so the tutorial code and text remain Daniel Bourke's. I removed the MIT license that was here, because it named me as the copyright holder. — Vishal Krishna Kumar
+
+---
+
 # Simple Local RAG Tutorial
 
 Local RAG pipeline we're going to build:
-<img width="4064" height="1464" alt="simple-local-rag-workflow-flowchart" src="https://github.com/Vishal-Krishna-Kumar/RAG-Pipeline/blob/main/images/simple-local-rag-workflow-flowchart.png" />
-'''
 
-'''
-
-
+!["This is a flowchart describing a simple local retrieval-augmented generation (RAG) workflow for document processing and embedding creation, followed by search and answer functionality. The process begins with a collection of documents, such as PDFs or a 1200-page nutrition textbook, which are preprocessed into smaller chunks, for example, groups of 10 sentences each. These chunks are used as context for the Large Language Model (LLM). A cool person (potentially the user) asks a query such as "What are the macronutrients? And what do they do?" This query is then transformed by an embedding model into a numerical representation using sentence transformers or other options from Hugging Face, which are stored in a torch.tensor format for efficiency, especially with large numbers of embeddings (around 100k+). For extremely large datasets, a vector database/index may be used. The numerical query and relevant document passages are processed on a local GPU, specifically an RTX 4090. The LLM generates output based on the context related to the query, which can be interacted with through an optional chat web app interface. All of this processing happens on a local GPU. The flowchart includes icons for documents, processing steps, and hardware, with arrows indicating the flow from document collection to user interaction with the generated text and resources."](images/simple-local-rag-workflow-flowchart.png)
 
 All designed to run locally on a NVIDIA GPU.
 
@@ -18,13 +22,14 @@ In our specific example, we'll build NutriChat, a RAG workflow that allows a per
 
 PDF source: https://pressbooks.oer.hawaii.edu/humannutrition2/ 
 
-You can also run notebook 'RetrievalAugumentationGeneration.ipynb in Colab
+You can also run notebook `00-simple-local-rag.ipynb` directly in [Google Colab](https://colab.research.google.com/github/mrdbourke/simple-local-rag/blob/main/00-simple-local-rag.ipynb). 
 
 TODO:
 - [ ] Finish setup instructions 
 - [x] Make header image of workflow 
 - [ ] Add intro to RAG info in README?
 - [ ] Add extensions to README 
+- [x] Record video of code writing/walkthrough - DONE, follow along with each line of code on YouTube: https://youtu.be/qN_2fnOPY-M 
 
 ## Getting Started
 
@@ -35,6 +40,7 @@ Two main options:
 ## Prerequisites
 
 - Comfortable writing Python code. 
+- 1-2 beginner machine learning/deep learning courses.
 - Familiarity with PyTorch, see my [beginner PyTorch video](https://youtu.be/Z_ikDlimN6A?si=NIkrslkvHaNdlYgx) for more. 
 
 ## Setup
@@ -178,3 +184,7 @@ Performance wise, LLM APIs may still perform better than an open-source model ru
 # TK - Extensions 
 
 Coming soon.
+
+
+
+
