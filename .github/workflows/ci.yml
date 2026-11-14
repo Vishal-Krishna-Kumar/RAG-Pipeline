@@ -1,0 +1,25 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  notebook:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install test tools
+        run: pip install pytest ruff
+      - name: Lint and format check
+        run: |
+          ruff check scripts tests
+          ruff format --check scripts tests
+      - name: Tests
+        run: pytest -q tests
+      - name: Check the notebook
+        run: python scripts/check_notebook.py
