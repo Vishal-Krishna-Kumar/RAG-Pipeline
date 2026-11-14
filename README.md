@@ -1,8 +1,46 @@
 > [!IMPORTANT]
 > **About this repository**
-> This is my walkthrough of **Daniel Bourke's [simple-local-rag](https://github.com/mrdbourke/simple-local-rag)** tutorial: a local RAG pipeline over a 1,200-page nutrition textbook, with Gemma running on a local GPU. The notebook `RetrievalAugumentationGenerative.ipynb` is his `00-simple-local-rag.ipynb`: 88 of its 126 cells are unchanged, and the rest are small edits I made while following along. The README below is his, with his video and Colab links restored.
+> This is my walkthrough of **Daniel Bourke's [simple-local-rag](https://github.com/mrdbourke/simple-local-rag)** tutorial: a local RAG pipeline over a 1,200-page nutrition textbook, with Gemma running on a local GPU. The notebook `RetrievalAugumentationGenerative.ipynb` is his `00-simple-local-rag.ipynb`. Compared cell by cell, 122 of its 126 cells match the original apart from trailing whitespace. The other four differ by the removed Colab badge and three comments I added while following along. The README below the line is his, with his video and Colab links.
 >
 > The original repository has no open-source license, so the tutorial code and text remain Daniel Bourke's. I removed the MIT license that was here, because it named me as the copyright holder. — Vishal Krishna Kumar
+
+[![CI](https://github.com/Vishal-Krishna-Kumar/RAG-Pipeline/actions/workflows/ci.yml/badge.svg)](https://github.com/Vishal-Krishna-Kumar/RAG-Pipeline/actions/workflows/ci.yml)
+
+## In this copy
+
+| Path | What it is |
+|---|---|
+| `RetrievalAugumentationGenerative.ipynb` | The tutorial notebook (see the note above). |
+| `Human-Nutrition-2020-Edition-1598491699.pdf` | The textbook the pipeline searches. Source: https://pressbooks.oer.hawaii.edu/humannutrition2/ |
+| `requirements.txt` | The tutorial's requirements file, unchanged. |
+| `scripts/check_notebook.py`, `tests/`, `.github/workflows/ci.yml` | Mine: a static check of the notebook that runs in CI. |
+
+To use this copy instead of the original:
+
+```
+git clone https://github.com/Vishal-Krishna-Kumar/RAG-Pipeline.git
+cd RAG-Pipeline
+```
+
+Then follow the setup steps below from "Create environment". One thing to know: the notebook looks for `human-nutrition-text.pdf` and downloads it when that file is missing. The PDF in this repository has a different name, so either rename it to `human-nutrition-text.pdf` or let the notebook download its own copy.
+
+## The pipeline at a glance
+
+These values are read from the notebook:
+
+1. **Read**: PyMuPDF extracts the text of each PDF page.
+2. **Split**: spaCy's sentencizer splits pages into sentences, grouped into chunks of 10 sentences. Chunks of 30 tokens or fewer are dropped.
+3. **Embed**: `all-mpnet-base-v2` (sentence-transformers) embeds every chunk. The embeddings are saved to a CSV file.
+4. **Retrieve**: the query is embedded with the same model and the top 5 chunks by dot-product score are returned.
+5. **Generate**: Gemma (`google/gemma-7b-it` or `google/gemma-2b-it`, chosen by available GPU memory, optionally 4-bit quantised) answers from the retrieved chunks.
+
+## Checking the notebook without a GPU
+
+Running the notebook needs an NVIDIA GPU and access to the Gemma weights, so CI does not execute it. The check below confirms that the notebook is well formed, that every code cell is valid Python and that no Hugging Face token was saved in it:
+
+```
+python scripts/check_notebook.py
+```
 
 ---
 
